@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"encoding/pem"
 	"github.com/monzo/terrors"
-	verified_sms "github.com/monzo/verifiedsms"
 	"golang.org/x/oauth2/google"
 	"golang.org/x/oauth2/jwt"
 	"net/http"
@@ -17,9 +16,9 @@ const (
 
 // GetHttpClient returns a *http.Client which performs requests using the identity of the verified_sms.Partner
 // service account
-func GetHttpClient(ctx context.Context, partner verified_sms.Partner) (*http.Client, error) {
+func GetHttpClient(ctx context.Context, serviceAccountJSON string) (*http.Client, error) {
 	serviceAccount := serviceAccountDetails{}
-	err := json.Unmarshal([]byte(partner.ServiceAccountJSONFile), &serviceAccount)
+	err := json.Unmarshal([]byte(serviceAccountJSON), &serviceAccount)
 
 	if err != nil {
 		return nil, terrors.Propagate(err)

@@ -7,19 +7,18 @@ import (
 	"crypto/x509"
 	"encoding/base64"
 	"github.com/monzo/terrors"
-	verified_sms "github.com/monzo/verifiedsms"
 	"golang.org/x/crypto/hkdf"
 	"io"
 )
 
 // GetHashForSMSMessage returns the hash for a given SMS message sent by a given agent to a user with a given public key
-func GetHashForSMSMessage(publicKeyString string, agent *verified_sms.Agent, smsMessage []byte) ([]byte, error) {
+func GetHashForSMSMessage(publicKeyString string, agentPrivateKey *ecdsa.PrivateKey, smsMessage []byte) ([]byte, error) {
 	publicKey, err := getPublicKeyFromPublicKeyPayload(publicKeyString)
 	if err != nil {
 		return nil, terrors.Propagate(err)
 	}
 
-	sharedSecret, err := ecdhDeriveSecret(agent.PrivateKey, publicKey)
+	sharedSecret, err := ecdhDeriveSecret(agentPrivateKey, publicKey)
 	if err != nil {
 		return nil, terrors.Propagate(err)
 	}

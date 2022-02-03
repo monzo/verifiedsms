@@ -57,7 +57,7 @@ func (partner Partner) MarkSMSAsVerified(ctx context.Context, phoneNumber string
 
 	for _, publicKey := range publicKeys {
 		for _, smsMessageEntry := range smsMessages {
-			hash, err := hashing.GetHashForSMSMessage(publicKey, agent, []byte(smsMessageEntry))
+			hash, err := hashing.GetHashForSMSMessage(publicKey, agent.PrivateKey, []byte(smsMessageEntry))
 			if err != nil {
 				return false, terrors.Propagate(err)
 			}
@@ -86,7 +86,7 @@ func (partner Partner) MarkSMSAsVerified(ctx context.Context, phoneNumber string
 	request.Header.Set("Content-Type", ContentTypeHeader)
 	request.Header.Set("User-Agent", UserAgentHeader)
 
-	client, err := oauth2.GetHttpClient(ctx, partner)
+	client, err := oauth2.GetHttpClient(ctx, partner.ServiceAccountJSONFile)
 	if err != nil {
 		return false, terrors.Propagate(err)
 	}
@@ -129,7 +129,7 @@ func (partner Partner) GetPhoneNumberPublicKeys(ctx context.Context, phoneNumber
 	request.Header.Set("Content-Type", ContentTypeHeader)
 	request.Header.Set("User-Agent", UserAgentHeader)
 
-	client, err := oauth2.GetHttpClient(ctx, partner)
+	client, err := oauth2.GetHttpClient(ctx, partner.ServiceAccountJSONFile)
 	if err != nil {
 		return nil, terrors.Propagate(err)
 	}
