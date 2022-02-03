@@ -19,5 +19,5 @@ agent := verified_sms.VerifiedSMSAgent{
 	PrivateKey: ...,
 }
 
-partner.MarkSMSAsVerified(context.Background(), "+447700900461", agent, "hello!")
+wasMessageVerified, err := partner.MarkSMSAsVerified(context.Background(), "+447700900461", agent, "hello!")
 ```
