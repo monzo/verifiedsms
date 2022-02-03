@@ -13,7 +13,7 @@ import (
 )
 
 // GetHashForSMSMessage returns the hash for a given SMS message sent by a given agent to a user with a given public key
-func GetHashForSMSMessage(publicKeyString string, agent verified_sms.Agent, smsMessage []byte) ([]byte, error) {
+func GetHashForSMSMessage(publicKeyString string, agent *verified_sms.Agent, smsMessage []byte) ([]byte, error) {
 	publicKey, err := getPublicKeyFromPublicKeyPayload(publicKeyString)
 	if err != nil {
 		return nil, terrors.Propagate(err)

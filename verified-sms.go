@@ -41,7 +41,7 @@ type Agent struct {
 // device just doesn't support Verified SMS
 // An error will be returned if we couldn't mark the SMS as Verified and we aren't sure whether the user is on
 // Verified SMS
-func (partner Partner) MarkSMSAsVerified(ctx context.Context, phoneNumber string, agent Agent, smsMessage string) (bool, error) {
+func (partner Partner) MarkSMSAsVerified(ctx context.Context, phoneNumber string, agent *Agent, smsMessage string) (bool, error) {
 	publicKeys, err := partner.GetPhoneNumberPublicKeys(ctx, phoneNumber)
 	if err != nil {
 		return false, terrors.Propagate(err)
