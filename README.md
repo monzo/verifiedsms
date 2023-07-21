@@ -10,11 +10,11 @@ package main
 
 import "github.com/monzo/verifiedsms"
 
-partner := verified_sms.VerifiedSMSPartner{
+partner := verifiedsms.VerifiedSMSPartner{
     ServiceAccountJSONFile: "foobar",
 }
 
-agent := verified_sms.VerifiedSMSAgent{
+agent := verifiedsms.VerifiedSMSAgent{
 	ID: "barbaz",
 	PrivateKey: ...,
 }
